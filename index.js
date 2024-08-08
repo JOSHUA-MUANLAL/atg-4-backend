@@ -286,7 +286,9 @@ io.on('connection', (socket) => {
 
           const response=await axios.request(opt)
         let prices = response.data;
+        console.log("new price",prices[0])
         let oldprice=cache.get('prices')
+        console.log('old price',oldprice[0])
         cache.set('prices', prices);
       console.log("fecth new price")
        
