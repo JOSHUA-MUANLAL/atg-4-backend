@@ -254,7 +254,7 @@ app.get('/getuserdata',authentication,async(req,res)=>{
 
 io.on('connection', (socket) => {
     try{
-        
+        let a=1;
     console.log('Client connected',socket.id);
   
     const options = {
@@ -268,7 +268,7 @@ io.on('connection', (socket) => {
         .then(function (response) {
             const oldPrices = cache.get('prices') ||  {};
             cache.set('prices',response.data)
-            socket.emit('coinprices', response.data,oldPrices);
+            socket.emit('coinprices', response.data,oldPrices,a);
         })
         .catch(function (error) {
           console.error(error);
@@ -290,15 +290,17 @@ io.on('connection', (socket) => {
         let oldprice=cache.get('prices')
         console.log('old price',oldprice[0])
         cache.set('prices', prices);
-      console.log("fecth new price")
+      console.log("fecth new price")  
+
+      a=a+1;
        
         
 
-        socket.emit('coinprices', prices,oldprice);
+        socket.emit('coinprices', prices,oldprice,a);
       } catch (error) {
         console.error('Failed to fetch prices', error);
       }
-    }, 10000);
+    }, 2000);
     }catch(error){
         console.log(error)
     }
